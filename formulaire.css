@@ -1,0 +1,25 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+}
+#nom{
+    width: 100%;
+    height: 30px;
+}
+#prenom{
+    width: 100%;
+    height: 30px;
+}
+#choix{
+    width: 100%;
+    height: 30px;
+}

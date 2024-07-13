@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="formulaire.css">
+    <title>Formulaire et Nouveau Tableau apprenant</title>
+   
+</head>
+<body>
+    <h1>Formulaire</h1>
+    <form id="apprenantForm">
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" name="nom" required><br><br>
+        <label for="prenom">Prénom:</label>
+        <input type="text" id="prenom" name="prenom" required><br><br>
+        <label for="formation">Formation:</label>
+        <select name="choix" id="choix">
+            <option value="">Choix de formation</option>
+            <option value="Référent digital">Référent Digital</option>
+            <option value="Developpeur web">Developpeur Web/Web Mobile</option>
+        </select><br><br>
+        <button type="submit">Valider</button>
+
+    </form>
+
+    <h1>Nouveau Tableau apprenant</h1>
+    <table id="apprenantTable">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Choix</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+    <button type="submit" onclick="Réinitialiser()">Réinitialiser</button>
+
+    <script>
+        // Charger les apprenants du localStorage au chargement de la page
+        document.addEventListener('DOMContentLoaded', () => {
+            afficherApprenants();
+        });
+
+        // Gérer le formulaire d'ajout d'apprenant
+        document.getElementById('apprenantForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const nom = document.getElementById('nom').value;
+            const prenom = document.getElementById('prenom').value;
+            const choix = document.getElementById('choix').value;
+
+            ajouterApprenant(nom, prenom, choix);
+            afficherApprenants();
+
+            // Réinitialiser le formulaire
+            this.reset();
+
+        });
+       
+
+        function ajouterApprenant(nom, prenom, choix) {
+            let apprenants = JSON.parse(localStorage.getItem('apprenants')) || [];
+            apprenants.push({ nom, prenom, choix });
+            localStorage.setItem('apprenants', JSON.stringify(apprenants));
+        }
+
+        function afficherApprenants() {
+            const tbody = document.getElementById('apprenantTable').querySelector('tbody');
+            tbody.innerHTML = ''; // Vider le tableau
+
+            const apprenants = JSON.parse(localStorage.getItem('apprenants')) || [];
+
+            apprenants.forEach(apprenant => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${apprenant.nom}</td>
+                    <td>${apprenant.prenom}</td>
+                    <td>${apprenant.choix}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>
